@@ -1,4 +1,5 @@
 const express = require('express');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -10,6 +11,13 @@ app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     res.send('index.html');
+});
+
+app.get('/randomQuote', async function(req, res) {
+    let apiAddress = 'https://zenquotes.io/api/random';
+    const response = await fetch(apiAddress);
+    const result = await response.json();
+    res.send(result);
 });
 
 /*
