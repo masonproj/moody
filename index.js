@@ -1,7 +1,10 @@
+require('dotenv').config();
 const fetch = require('node-fetch');
 const path = require('path');
 const express = require('express');
 const app = express();
+
+const API_KEY = process.env.API_KEY
 
 const server = app.listen(process.env.PORT || 8080, () => {
     console.log('listening...');
