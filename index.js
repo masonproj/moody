@@ -44,6 +44,12 @@ app.get('/dailyQuote', async function (req, res) {
     res.send(result[0].q);
 });
 
+app.get('/videoTest', async function (req, res) {
+    let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=happy&key=' + API_KEY;
+    const response = await fetch(apiAddress);
+    const result = await response.json();
+    res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
+})
 /*
 Zenquotes
 
