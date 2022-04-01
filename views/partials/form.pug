@@ -1,0 +1,35 @@
+div.container.p-5.border.mt-4
+    div.row.align-items-center
+        div.col-sm-6
+            h1 Mood Tracker
+            p.fs-5 Add your daily mood here!
+
+        div.col-md-6
+            form
+                div.row
+                    div.col.mb-3
+                        div.form-group
+                        label(for="mood", class="form-label") Mood:
+                        select(name="mood", id="mood", class="form-select")
+                            option(value="") Select your mood
+                            option(value="anxious") Anxious
+                            option(value="joyful") Joyful 
+                            option(value="calm") Calm 
+                            option(value="reflective") Reflective 
+                            option(value="restless") Restless
+                            option(value="sad") Sad
+                div.row
+                    div.col.mb-3
+                        div.form-group
+                            label(for="description", class="form-label") Description:
+                            textarea(name="description", id="description", class="form-control", placeholder="Insert any details about your mood here")
+                div.row
+                    div.col.d-flex.flex-column.mt-2
+                            p Select a video and/or a quote for your mood submission:
+                            div.form-check.d-flex
+                                input(class="form-check-input me-3", type="checkbox", value="", id="video", name="video")
+                                label(for="video", class="form-check-label") Video
+                            div.form-check.mb-3
+                                input(class="form-check-input me-3", type="checkbox", value="", id="quote", name="quote")
+                                label(for="video", class="form-check-label") Quote
+                button.btn.btn-primary.mt-2 Submit
