@@ -9,11 +9,13 @@ const server = app.listen(process.env.PORT || 8080, () => {
 
 app.use(express.static('public'));
 
+app.set('view engine', 'pug');
+
 app.get('/', (req, res) => {
     res.send('index.html');
 });
 
-app.get('/randomQuote', async function(req, res) {
+app.get('/randomQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/random';
     const response = await fetch(apiAddress);
     const result = await response.json();
