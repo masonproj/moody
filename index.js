@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 });
 
 //GET DATA FROM FORM
-app.post('/', function (req, res) {
+app.post('/submitMood', function (req, res) {
     console.log(req.body);
 
     //Just responds with the index again. Can check if there was data in req.body and if true also respond with a confirmation variable or the entry list page
@@ -48,8 +48,9 @@ app.get('/dailyQuote', async function (req, res) {
     res.send(result[0].q);
 });
 
-app.get('/videoTest', async function (req, res) {
-    let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=happy&key=' + API_KEY;
+app.get('/videoTest/:mood', async function (req, res) {
+    let mood = req.params.mood;
+    let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=' + mood + '&key=' + API_KEY;
     const response = await fetch(apiAddress);
     const result = await response.json();
     res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
