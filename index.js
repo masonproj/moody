@@ -45,36 +45,34 @@ app.get('/login', async function (req, res) {
 Testing mood submission page:
 */
 
-app.get('/mood', (req, res) => {
-    const dummyRequest = {
+app.get('/mood', async function (req, res) {
+    let dummyRequest = {
         mood: 'happy',
         description: 'this is a description',
+        quote: 'true',
     };
+    if (dummyRequest.quote) {
+        let result = await fetch('http://localhost:8080/dailyQuote');
+        let quote = await result.json();
+        dummyRequest.quote = quote;
+    }
     // logic for getting quote or video based on request here
     // then send new object to mood pug file
     res.render('mood', dummyRequest);
 });
 
-/*
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
     const response = await fetch(apiAddress);
     const result = await response.json();
-    res.send(result[0].q);
+    res.json(result[0].q);
 });
 
+/*
 app.get('/videoTest', async function (req, res) {
     let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=happy&key=' + API_KEY;
     const response = await fetch(apiAddress);
     const result = await response.json();
     res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
 })
-/*
-Zenquotes
-
-6. Request quotes by keyword
-
-To filter quotes by keyword, simply add &keyword=[keyword] to the end of your request.
-For example: https://zenquotes.io/api/quotes/[YOUR_API_KEY]&keyword=happiness would return a maximum of 50 random quotes matching the keyword “happiness”.
-To see a list of keywords currently supported, visit the following link: https://zenquotes.io/keywords
 */
