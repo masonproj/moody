@@ -20,7 +20,7 @@ app.get('/randomQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/random';
     const response = await fetch(apiAddress);
     const result = await response.json();
-    res.send(result);
+    res.send(result[0].q);
 });
 
 /*
