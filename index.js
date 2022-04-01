@@ -16,11 +16,15 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/randomQuote', async function(req, res) {
+app.get('/randomQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/random';
     const response = await fetch(apiAddress);
     const result = await response.json();
     res.send(result);
+});
+
+app.get('/login', async function (req, res) {
+    res.render('login');
 });
 
 /*
