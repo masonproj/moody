@@ -3,9 +3,10 @@ const fetch = require('node-fetch');
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
+const { response } = require('express');
 const app = express();
 
-const API_KEY = process.env.API_KEY
+const API_KEY = process.env.API_KEY;
 
 const server = app.listen(process.env.PORT || 8080, () => {
     console.log('listening...');
@@ -41,6 +42,29 @@ app.get('/login', async function (req, res) {
     res.render('login');
 });
 
+app.get('/mood', async function (req, res) {
+    let dummyRequest = {
+        mood: 'happy',
+        description: 'this is a description',
+        quote: 'true',
+        video: 'true',
+    };
+
+    if (dummyRequest.quote) {
+        let result = await fetch('http://localhost:8080/dailyQuote');
+        let quote = await result.text();
+        dummyRequest.quote = quote;
+    }
+
+    if (dummyRequest.video) {
+        let result = await fetch('http://localhost:8080/videoTest');
+        let video = await result.text();
+        dummyRequest.video = video;
+    }
+
+    res.render('mood', dummyRequest);
+});
+
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
     const response = await fetch(apiAddress);
@@ -52,15 +76,6 @@ app.get('/videoTest', async function (req, res) {
     let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=happy&key=' + API_KEY;
     const response = await fetch(apiAddress);
     const result = await response.json();
+
     res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
 });
-
-/*
-Zenquotes
-
-6. Request quotes by keyword
-
-To filter quotes by keyword, simply add &keyword=[keyword] to the end of your request.
-For example: https://zenquotes.io/api/quotes/[YOUR_API_KEY]&keyword=happiness would return a maximum of 50 random quotes matching the keyword “happiness”.
-To see a list of keywords currently supported, visit the following link: https://zenquotes.io/keywords
-*/
