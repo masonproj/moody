@@ -1,0 +1,13 @@
+div.container.p-5.border.mt-4
+    div.row.align-items-center
+        div.col-sm-6
+            h1 Mood Tracker
+            p.fs-5 Thank you for submitting your mood!
+
+        div.col-md-6
+            div.card
+                div.card-header Your mood submission 
+                div.card-body
+                    h5.card-title Mood: #{mood}
+                    if description
+                    p.card-text #{description}

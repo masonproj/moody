@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 
-const API_KEY = process.env.API_KEY
+const API_KEY = process.env.API_KEY;
 
 const server = app.listen(process.env.PORT || 8080, () => {
     console.log('listening...');
@@ -37,9 +37,22 @@ app.get('/randomQuote', async function (req, res) {
     res.send(result[0].q);
 });
 
-
 app.get('/login', async function (req, res) {
     res.render('login');
+});
+
+/* 
+Testing mood submission page:
+*/
+
+app.get('/mood', (req, res) => {
+    const dummyRequest = {
+        mood: 'happy',
+        description: 'this is a description',
+    };
+    // logic for getting quote or video based on request here
+    // then send new object to mood pug file
+    res.render('mood', dummyRequest);
 });
 
 /*
