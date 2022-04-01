@@ -37,12 +37,10 @@ app.get('/randomQuote', async function (req, res) {
     res.send(result[0].q);
 });
 
-
 app.get('/login', async function (req, res) {
     res.render('login');
 });
 
-/*
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
     const response = await fetch(apiAddress);
@@ -55,7 +53,8 @@ app.get('/videoTest', async function (req, res) {
     const response = await fetch(apiAddress);
     const result = await response.json();
     res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
-})
+});
+
 /*
 Zenquotes
 
