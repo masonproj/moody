@@ -5,7 +5,7 @@ div.container.p-5.border.mt-4
             p.fs-5 Add your daily mood here!
 
         div.col-md-6
-            form
+            form(action="/" method="post")
                 div.row
                     div.col.mb-3
                         div.form-group
@@ -27,9 +27,9 @@ div.container.p-5.border.mt-4
                     div.col.d-flex.flex-column.mt-2
                             p Select a video and/or a quote for your mood submission:
                             div.form-check.d-flex
-                                input(class="form-check-input me-3", type="checkbox", value="", id="video", name="video")
+                                input(class="form-check-input me-3", type="checkbox", value="true", id="video", name="video")
                                 label(for="video", class="form-check-label") Video
                             div.form-check.mb-3
-                                input(class="form-check-input me-3", type="checkbox", value="", id="quote", name="quote")
+                                input(class="form-check-input me-3", type="checkbox", value="true", id="quote", name="quote")
                                 label(for="video", class="form-check-label") Quote
                 button.btn.btn-primary.mt-2 Submit
