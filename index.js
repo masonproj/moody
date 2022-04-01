@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const path = require('path');
+const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 
@@ -11,8 +12,18 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
+    res.render('index');
+});
+
+//GET DATA FROM FORM
+app.post('/', function (req, res) {
+    console.log(req.body);
+
+    //Just responds with the index again. Can check if there was data in req.body and if true also respond with a confirmation variable or the entry list page
     res.render('index');
 });
 
