@@ -37,6 +37,12 @@ app.get('/randomQuote', async function (req, res) {
     res.send(result[0].q);
 });
 
+
+app.get('/login', async function (req, res) {
+    res.render('login');
+});
+
+/*
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
     const response = await fetch(apiAddress);
