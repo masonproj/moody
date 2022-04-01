@@ -7,12 +7,12 @@ const server = app.listen(process.env.PORT || 8080, () => {
     console.log('listening...');
 });
 
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
-    res.send('index.html');
+    res.render('home');
 });
 
 app.get('/randomQuote', async function (req, res) {
