@@ -42,10 +42,6 @@ app.get('/login', async function (req, res) {
     res.render('login');
 });
 
-/* 
-Testing mood submission page:
-*/
-
 app.get('/mood', async function (req, res) {
     let dummyRequest = {
         mood: 'happy',
@@ -81,11 +77,5 @@ app.get('/videoTest', async function (req, res) {
     const response = await fetch(apiAddress);
     const result = await response.json();
 
-    res.send(
-        '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +
-            result.items[0].id.videoId +
-            '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
-    );
+    res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
 });
-/*
- */
