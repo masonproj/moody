@@ -5,12 +5,16 @@ div.container.p-5.border.mt-4
             p.fs-5 Thank you for submitting your mood!
 
         div.col-md-6
-            div.card
-                div.card-header Your mood submission 
-                div.card-body
-                    h5.card-title Mood: #{mood}
-                    if description
-                    p.card-text #{description}
-                    if quote
-                    p.card-text Daily quote: 
-                        strong  #{quote}
+            div.row 
+                div.card
+                    div.card-header Your mood submission 
+                    div.card-body
+                        h5.card-title Mood: #{mood}
+                        if description
+                        p.card-text #{description}
+                        if quote
+                        p.card-text Daily quote: 
+                            strong  #{quote}
+            div.row
+                if video
+                div.container.p-2.mt-3.me-4 !{video}

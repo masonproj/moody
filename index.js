@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
+const { response } = require('express');
 const app = express();
 
 const API_KEY = process.env.API_KEY;
@@ -50,14 +51,21 @@ app.get('/mood', async function (req, res) {
         mood: 'happy',
         description: 'this is a description',
         quote: 'true',
+        video: 'true',
     };
+
     if (dummyRequest.quote) {
         let result = await fetch('http://localhost:8080/dailyQuote');
-        let quote = await result.json();
+        let quote = await result.text();
         dummyRequest.quote = quote;
     }
-    // logic for getting quote or video based on request here
-    // then send new object to mood pug file
+
+    if (dummyRequest.video) {
+        let result = await fetch('http://localhost:8080/videoTest');
+        let video = await result.text();
+        dummyRequest.video = video;
+    }
+
     res.render('mood', dummyRequest);
 });
 
@@ -65,14 +73,19 @@ app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
     const response = await fetch(apiAddress);
     const result = await response.json();
-    res.json(result[0].q);
+    res.send(result[0].q);
 });
 
-/*
 app.get('/videoTest', async function (req, res) {
     let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=happy&key=' + API_KEY;
     const response = await fetch(apiAddress);
     const result = await response.json();
-    res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
-})
-*/
+
+    res.send(
+        '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +
+            result.items[0].id.videoId +
+            '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    );
+});
+/*
+ */
