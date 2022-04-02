@@ -5,7 +5,7 @@ div.container.p-5.border.mt-4
             p.fs-5 Add your daily mood here!
 
         div.col-md-6
-            form(action="/" method="post")
+            form(action="/submitMood" method="post")
                 div.row
                     div.col.mb-3
                         div.form-group
@@ -21,7 +21,7 @@ div.container.p-5.border.mt-4
                 div.row
                     div.col.mb-3
                         div.form-group
-                            label(for="description", class="form-label") Description:
+                            label(for="description", class="form-label") (Optional) Description:
                             textarea(name="description", id="description", class="form-control", placeholder="Insert any details about your mood here")
                 div.row
                     div.col.d-flex.flex-column.mt-2
