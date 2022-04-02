@@ -58,6 +58,57 @@ app.get('/login', async function (req, res) {
     res.render('login');
 });
 
+app.get('/mood', async function (req, res) {
+    let dummyRequest = {
+        mood: 'happy',
+        description: 'this is a description',
+        quote: 'true',
+        video: 'true',
+    };
+
+    // req.body.quote or video
+    if (dummyRequest.quote) {
+        let result = await fetch('http://localhost:8080/dailyQuote');
+        let quote = await result.text();
+        dummyRequest.quote = quote;
+    }
+
+    if (dummyRequest.video) {
+        let result = await fetch('http://localhost:8080/videoTest');
+        let video = await result.text();
+        dummyRequest.video = video;
+    }
+
+    res.render('mood', dummyRequest);
+});
+
+app.get('/history', (req, res) => {
+    let dummyHistory = [
+        {
+            mood: 'happy',
+            description: 'this is a description',
+            quote: 'this is a quote',
+        },
+        {
+            mood: 'sad',
+            description: 'this is a description',
+            video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbZSe6N_BXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
+        },
+        {
+            mood: 'joyful',
+            description: 'this is a description',
+            quote: 'this is a quote',
+            video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbZSe6N_BXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
+        },
+        {
+            mood: 'happy',
+            description: 'this is a description',
+        },
+    ];
+
+    res.render('history', { dummyHistory });
+});
+
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
     const response = await fetch(apiAddress);
