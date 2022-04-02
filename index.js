@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const path = require('path');
 const bodyParser = require('body-parser');
 const express = require('express');
+const { nextTick } = require('process');
 const app = express();
 
 const API_KEY = process.env.API_KEY;
@@ -18,9 +19,34 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', function(req, res) {
+let currentUser;
+
+let dummyUsers = [
+    {
+        username: 'john',
+        password: 'thisismypass',
+    },
+    {
+        username: 'blade',
+        password: '123456',
+    },
+    {
+        username: 'myuser',
+        password: '102030#yes',
+    },
+];
+
+const checkLogin = (req, res, next) => {
+    if (currentUser) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+};
+
+app.get('/', checkLogin, function (req, res) {
     res.render('index');
-})
+});
 
 //GET DATA FROM FORM
 app.post('/submitMood', async function (req, res) {
@@ -54,8 +80,22 @@ app.get('/randomQuote', async function (req, res) {
     res.send(result[0].q);
 });
 
-app.get('/login', async function (req, res) {
+app.get('/login', function (req, res) {
     res.render('login');
+});
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    dummyUsers.filter((user) => {
+        if (username === user.username && password === user.password) {
+            currentUser = user;
+            res.redirect('/');
+        }
+    });
+
+    if (!currentUser) {
+        res.render('login', { message: 'Invalid username or password' });
+    }
 });
 
 app.get('/history', (req, res) => {
@@ -98,7 +138,11 @@ app.get('/videoTest/:mood', async function (req, res) {
     const response = await fetch(apiAddress);
     const result = await response.json();
 
-    res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[getRandomInt(24)].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
+    res.send(
+        '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +
+            result.items[getRandomInt(24)].id.videoId +
+            '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+    );
 });
 
 function getRandomInt(max) {
