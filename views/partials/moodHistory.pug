@@ -23,22 +23,22 @@ div.container.p-5.border.mt-4
                                 .container.mb-4 
                                     span.text-secondary.fs-6 Quote: 
                                     span #{dummyHistory[index].quote}
-                                    form
+                                    form(action='/newQuote/' + dummyHistory[index].entryId, method='get')
                                         button.btn.btn-primary.mt-2 Get a new quote
                             else 
                                 .container.mb-4 
                                     span.text-secondary.fs-6 No quote for this submission
-                                    form
+                                    form(action='/newQuote/' + dummyHistory[index].entryId, method='get')
                                         button.btn.btn-primary.mt-2 Get a new quote
                             if dummyHistory[index].video 
                                 .container.mb-4 
                                     div.text-secondary.fs-6 Video: 
                                     div.container.p-2.mt-3 !{dummyHistory[index].video} 
-                                    form
+                                    form(action='/newVideo/' + dummyHistory[index].entryId + '/' + dummyHistory[index].mood, method="get")
                                         button.btn.btn-primary Get a new video
                             else 
                                 .container.mb-4
                                     div.text-secondary.fs-6 No video for this submission
-                                    form
+                                    form(action='/newVideo/' + dummyHistory[index].entryId + '/' + dummyHistory[index].mood, method="get")
                                         button.btn.btn-primary.mt-2 Get a new video   
                                     

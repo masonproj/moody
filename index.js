@@ -8,6 +8,33 @@ const app = express();
 
 const API_KEY = process.env.API_KEY;
 
+let dummyHistory = [
+    {
+        entryId: 0,
+        mood: 'Happy',
+        description: 'Today was overall a good day',
+        quote: 'When you are talented you do it whatever it is until your fingers bleed or your eyes are ready to fall out of your head.',
+    },
+    {
+        entryId: 1,
+        mood: 'Sad',
+        description: 'I ruined my favourite shirt.',
+        video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/-GXfLY4-d8w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
+    },
+    {
+        entryId: 2,
+        mood: 'Joyful',
+        description: 'I was in a good mood today',
+        quote: 'Your friends will know you better in the first minute you meet than your acquaintances will know you in a thousand years.',
+        video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/I7fA8hdrqp8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
+    },
+    {
+        entryId: 3,
+        mood: 'Happy',
+        description: '',
+    },
+];
+
 const server = app.listen(process.env.PORT || 8080, () => {
     console.log('listening...');
 });
@@ -51,10 +78,11 @@ app.get('/', checkLogin, function (req, res) {
 //GET DATA FROM FORM
 app.post('/submitMood', async function (req, res) {
     let request = {
+        entryId: dummyHistory.length,
         mood: req.body.mood,
         description: req.body.description,
         quote: req.body.quote,
-        video: req.body.video,
+        video: req.body.video
     };
 
     if (request.quote) {
@@ -68,8 +96,8 @@ app.post('/submitMood', async function (req, res) {
         let video = await result.text();
         request.video = video;
     }
+    dummyHistory.push(request);
 
-    //Just responds with the index again. Can check if there was data in req.body and if true also respond with a confirmation variable or the entry list page
     res.render('mood', request);
 });
 
@@ -99,31 +127,27 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/history', (req, res) => {
-    let dummyHistory = [
-        {
-            mood: 'happy',
-            description: 'this is a description',
-            quote: 'this is a quote',
-        },
-        {
-            mood: 'sad',
-            description: 'this is a description',
-            video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbZSe6N_BXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
-        },
-        {
-            mood: 'joyful',
-            description: 'this is a description',
-            quote: 'this is a quote',
-            video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbZSe6N_BXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
-        },
-        {
-            mood: 'happy',
-            description: 'this is a description',
-        },
-    ];
 
     res.render('history', { dummyHistory });
 });
+
+app.get('/newVideo/:entryId/:mood', async function(req, res) {
+    let entryId = req.params.entryId;
+    let result = await fetch('http://localhost:8080/videoTest/' + req.params.mood);
+    let video = await result.text();
+    dummyHistory[entryId].video = video;
+
+    res.render('history', { dummyHistory })
+})
+
+app.get('/newQuote/:entryId', async function(req, res) {
+    let entryId = req.params.entryId;
+    let result = await fetch('http://localhost:8080/randomQuote');
+    let quote = await result.text();
+    dummyHistory[entryId].quote = quote;
+
+    res.render('history', { dummyHistory })
+})
 
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
