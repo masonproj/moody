@@ -72,7 +72,7 @@ const checkLogin = (req, res, next) => {
 };
 
 app.get('/', checkLogin, function (req, res) {
-    res.render('index');
+    res.render('index', { currentUser });
 });
 
 //GET DATA FROM FORM
@@ -128,7 +128,7 @@ app.post('/login', (req, res) => {
 
 app.get('/history', (req, res) => {
 
-    res.render('history', { dummyHistory });
+    res.render('history', { dummyHistory, currentUser });
 });
 
 app.get('/newVideo/:entryId/:mood', async function(req, res) {
@@ -148,6 +148,45 @@ app.get('/newQuote/:entryId', async function(req, res) {
 
     res.render('history', { dummyHistory })
 })
+
+app.get('/quote', async function(req, res) {
+    let result = await fetch('https://moody-moodtracker.herokuapp.com/randomQuote');
+    let data = await result.text();
+
+    res.render('quote',{ data, currentUser })    
+});
+
+app.get('/video', async function(req, res) {
+    let mood;
+    switch (getRandomInt(5)) {
+        case 0:
+          mood = "Anxious";
+          break;
+        case 1:
+          mood = "Joyful";
+          break;
+        case 2:
+          mood = "Calm";
+          break;
+        case 3:
+          mood = "Reflective";
+          break;
+        case 4:
+          mood = "Restless";
+          break;
+        case 5:
+          mood = "Sad";
+    };
+    let apiAddress = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=' + mood + '+tips+motivation&key=' + API_KEY;
+    const response = await fetch(apiAddress);
+    const result = await response.json();
+    let data = 
+        '<iframe width="560" height="315" src="https://www.youtube.com/embed/' +
+            result.items[getRandomInt(24)].id.videoId +
+            '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+
+    res.render('video',{ data, currentUser })    
+});
 
 app.get('/dailyQuote', async function (req, res) {
     let apiAddress = 'https://zenquotes.io/api/today';
