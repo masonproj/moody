@@ -58,30 +58,6 @@ app.get('/login', async function (req, res) {
     res.render('login');
 });
 
-app.get('/mood', async function (req, res) {
-    let dummyRequest = {
-        mood: 'happy',
-        description: 'this is a description',
-        quote: 'true',
-        video: 'true',
-    };
-
-    // req.body.quote or video
-    if (dummyRequest.quote) {
-        let result = await fetch('http://localhost:8080/dailyQuote');
-        let quote = await result.text();
-        dummyRequest.quote = quote;
-    }
-
-    if (dummyRequest.video) {
-        let result = await fetch('http://localhost:8080/videoTest');
-        let video = await result.text();
-        dummyRequest.video = video;
-    }
-
-    res.render('mood', dummyRequest);
-});
-
 app.get('/history', (req, res) => {
     let dummyHistory = [
         {
