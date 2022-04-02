@@ -1,0 +1,13 @@
+div.container.p-5.border.mt-4
+    div.row.mb-5
+        h2 Your mood history
+        p.text-secondary.fs-5 Here you can see your previous submissions 
+    div.row
+        #accordion.accordion
+            for element, index in dummyHistory
+                .accordion-item
+                    h2.accordion-header(id=`heading${index+1}`)
+                        button.accordion-button(type='button' data-bs-toggle='collapse' data-bs-target=`#collapse${index+1}` aria-expanded='true' aria-controls=`collapse${index+1}`)
+                            | Accordion Item #1
+                    div.collapse1.accordion-collapse.collapse(id=`collapse${index+1}` aria-labelledby=`heading${index+1}` data-bs-parent='#accordion')
+                        .accordion-body some text here

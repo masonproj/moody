@@ -42,10 +42,6 @@ app.get('/login', async function (req, res) {
     res.render('login');
 });
 
-/* 
-Testing mood submission page:
-*/
-
 app.get('/mood', async function (req, res) {
     let dummyRequest = {
         mood: 'happy',
@@ -54,6 +50,7 @@ app.get('/mood', async function (req, res) {
         video: 'true',
     };
 
+    // req.body.quote or video
     if (dummyRequest.quote) {
         let result = await fetch('http://localhost:8080/dailyQuote');
         let quote = await result.text();
@@ -67,6 +64,33 @@ app.get('/mood', async function (req, res) {
     }
 
     res.render('mood', dummyRequest);
+});
+
+app.get('/history', (req, res) => {
+    let dummyHistory = [
+        {
+            mood: 'happy',
+            description: 'this is a description',
+            quote: 'this is a quote',
+        },
+        {
+            mood: 'sad',
+            description: 'this is a description',
+            video: 'this is a video',
+        },
+        {
+            mood: 'joyful',
+            description: 'this is a description',
+            quote: 'this is a quote',
+            video: 'and this is a video',
+        },
+        {
+            mood: 'happy',
+            description: 'this is a description',
+        },
+    ];
+
+    res.render('history', { dummyHistory });
 });
 
 app.get('/dailyQuote', async function (req, res) {
