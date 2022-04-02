@@ -39,6 +39,6 @@ div.container.p-5.border.mt-4
                             else 
                                 .container.mb-4
                                     div.text-secondary.fs-6 No video for this submission
-                                    form
+                                    form(action='/newVideo/' + dummyHistory[index].entryId + '/' + dummyHistory[index].mood, method="get")
                                         button.btn.btn-primary.mt-2 Get a new video   
                                     
