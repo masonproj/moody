@@ -76,13 +76,13 @@ app.get('/history', (req, res) => {
         {
             mood: 'sad',
             description: 'this is a description',
-            video: 'this is a video',
+            video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbZSe6N_BXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
         },
         {
             mood: 'joyful',
             description: 'this is a description',
             quote: 'this is a quote',
-            video: 'and this is a video',
+            video: '<iframe width="560" height="315" src="https://www.youtube.com/embed/ZbZSe6N_BXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>',
         },
         {
             mood: 'happy',
