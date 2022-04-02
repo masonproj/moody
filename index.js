@@ -86,13 +86,13 @@ app.post('/submitMood', async function (req, res) {
     };
 
     if (request.quote) {
-        let result = await fetch('http://localhost:8080/dailyQuote');
+        let result = await fetch('moody-moodtracker.herokuapp.com/dailyQuote');
         let quote = await result.text();
         request.quote = quote;
     }
 
     if (request.video) {
-        let result = await fetch('http://localhost:8080/videoTest/' + req.body.mood);
+        let result = await fetch('moody-moodtracker.herokuapp.com/videoTest/' + req.body.mood);
         let video = await result.text();
         request.video = video;
     }
@@ -133,7 +133,7 @@ app.get('/history', (req, res) => {
 
 app.get('/newVideo/:entryId/:mood', async function(req, res) {
     let entryId = req.params.entryId;
-    let result = await fetch('http://localhost:8080/videoTest/' + req.params.mood);
+    let result = await fetch('moody-moodtracker.herokuapp.com/videoTest/' + req.params.mood);
     let video = await result.text();
     dummyHistory[entryId].video = video;
 
@@ -142,7 +142,7 @@ app.get('/newVideo/:entryId/:mood', async function(req, res) {
 
 app.get('/newQuote/:entryId', async function(req, res) {
     let entryId = req.params.entryId;
-    let result = await fetch('http://localhost:8080/randomQuote');
+    let result = await fetch('moody-moodtracker.herokuapp.com/randomQuote');
     let quote = await result.text();
     dummyHistory[entryId].quote = quote;
 
