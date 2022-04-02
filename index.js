@@ -137,7 +137,7 @@ app.get('/newVideo/:entryId/:mood', async function(req, res) {
     let video = await result.text();
     dummyHistory[entryId].video = video;
 
-    res.render('history', { dummyHistory })
+    res.render('history', { dummyHistory, currentUser })
 })
 
 app.get('/newQuote/:entryId', async function(req, res) {
@@ -146,7 +146,7 @@ app.get('/newQuote/:entryId', async function(req, res) {
     let quote = await result.text();
     dummyHistory[entryId].quote = quote;
 
-    res.render('history', { dummyHistory })
+    res.render('history', { dummyHistory, currentUser })
 })
 
 app.get('/quote', async function(req, res) {
