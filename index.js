@@ -11,7 +11,7 @@ const API_KEY = process.env.API_KEY;
 let dummyHistory = [
     {
         entryId: 0,
-        mood: 'Happy',
+        mood: 'Joyful',
         description: 'Today was overall a good day',
         quote: 'When you are talented you do it whatever it is until your fingers bleed or your eyes are ready to fall out of your head.',
     },
@@ -30,7 +30,7 @@ let dummyHistory = [
     },
     {
         entryId: 3,
-        mood: 'Happy',
+        mood: 'Anxious',
         description: '',
     },
 ];
@@ -97,8 +97,8 @@ app.post('/submitMood', async function (req, res) {
         request.video = video;
     }
     dummyHistory.push(request);
-
-    res.render('mood', request);
+    console.log(request)
+    res.render('mood', { request, currentUser } );
 });
 
 app.get('/randomQuote', async function (req, res) {

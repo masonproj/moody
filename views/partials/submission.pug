@@ -9,17 +9,17 @@ div.container.p-5.border.mt-4
                 div.card
                     div.card-header Your mood submission 
                     div.card-body
-                        h5.card-title Mood: #{mood}
-                        if description
+                        h5.card-title Mood: #{request.mood}
+                        if request.description
                             p.card-text #{description}
                         else 
                             p.card-test 
-                        if quote
+                        if request.quote
                             p.card-text Daily quote: 
-                                strong  #{quote}
+                                strong  #{request.quote}
                         else 
                             p.card-text
                             
             div.row
-                if video
-                    div.container.p-2.mt-3 !{video}
+                if request.video
+                    div.container.p-2.mt-3 !{request.video}
