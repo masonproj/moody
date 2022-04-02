@@ -6,14 +6,20 @@ block content
   div.vh-100.d-flex.align-items-center.justify-content-center
     div.d-flex
         div.container.p-4.border.border-2.rounded-3.mb-5
-            form
+            form(action="/login" method="POST")
                 div.row 
                     div.form-group.mb-4
                         label(for="username", class="form-label") Username
-                        input(type="text", name="username", id="username", class="form-control", placeholder="Enter your username")
+                        input(type="text", name="username", id="username", class="form-control", placeholder="Enter your username" required)
                 div.row
                     div.form-group.mb-4
-                        label(for="password", class="form-label") Username
-                        input(type="password", name="password", id="username", class="form-control", placeholder="Password")
+                        label(for="password", class="form-label") Password
+                        input(type="password", name="password", id="password", class="form-control", placeholder="Password" required)
+                if message 
+                    .row 
+                        .alert.alert-danger #{message}
+                if info 
+                    .row 
+                        .alert.alert-info #{info}
                 div.d-flex.align-items-center.justify-content-center
                     button.btn.btn-primary.mt-3 Login
