@@ -71,5 +71,9 @@ app.get('/videoTest/:mood', async function (req, res) {
     const response = await fetch(apiAddress);
     const result = await response.json();
 
-    res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[0].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
+    res.send('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + result.items[getRandomInt(24)].id.videoId + '" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
 });
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
